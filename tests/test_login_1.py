@@ -18,7 +18,7 @@ def test_login(page: Page):
     page.get_by_role('button').click()
 
     spinner = page.get_by_test_id('login-submit-spinner')
-    error = page.get_by_text(ERROR_TEXT)
+    error = page.get_by_test_id('login-error-inline')
 
     spinner.wait_for(state='visible')
     spinner.wait_for(state='hidden')
