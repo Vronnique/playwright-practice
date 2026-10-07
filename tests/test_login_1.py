@@ -1,11 +1,14 @@
 import random
 import string
 
-from playwright.sync_api import Page, expect
+from playwright.sync_api import Page
+
+URL = 'http://2.26.162.45:8080'
+ERROR_TEXT = 'Invalid login or password.'
 
 def test_login(page: Page):
-    page.goto('http://2.26.162.45:8080')
-    page.get_by_role('link', name='login').click()
+    page.goto(URL)
+    page.get_by_test_id('nav-login').click()
 
     username = ''.join(random.choices(string.ascii_letters, k=8))
     password = ''.join(random.choices(string.ascii_letters, k=10))
@@ -14,7 +17,17 @@ def test_login(page: Page):
     page.get_by_test_id('login-password').fill(password)
     page.get_by_role('button').click()
 
+    spinner = page.get_by_test_id('login-submit-spinner')
+    error = page.get_by_text(ERROR_TEXT)
 
-    expect(page.get_by_test_id('login-submit-spinner')).to_be_visible()
-    expect(page.get_by_test_id('login-submit-spinner')).to_be_hidden()
-    expect(page.get_by_text('Invalid login or password.')).to_be_visible()
+    spinner.wait_for(state='visible')
+    spinner.wait_for(state='hidden')
+    error.wait_for(state='visible')
+
+    spinner_hidden = spinner.is_hidden()
+    assert spinner_hidden, (f'Ожидалось: появление и исчезновение индикатора загрузки.'
+                            f'Фактически: {spinner_hidden}')
+
+    error_visible = error.is_visible()
+    assert error_visible, (f"Ожидалось: появление сообщения об ошибке {ERROR_TEXT} после исчезновения индикатора загрузки."
+                           f"Фактически: {error_visible}")
