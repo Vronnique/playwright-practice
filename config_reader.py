@@ -3,21 +3,27 @@ from pathlib import Path
 
 
 class ConfigReader:
-    _instance = None
+    DEFAULT_CONFIG_PATH = 'config.json'
 
-    def __new__(cls):
-        if cls._instance is None:
-            cls._instance = super().__new__(cls)
-            cls._instance._load_config()
-        return cls._instance
+    _instances = {}
 
-    def _load_config(self) -> None:
-        config_path = Path(__file__).parent / 'config.json'
-        with open(config_path, encoding="utf-8") as f:
+    def __new__(cls, filepath: str = DEFAULT_CONFIG_PATH):
+        path = Path(filepath)
+        if not path.is_absolute():
+            path = Path(__file__).parent / path
+
+        absolute_path = str(path.resolve())
+
+        if absolute_path not in cls._instances:
+            instance = super().__new__(cls)
+            instance._load_config(absolute_path)
+            cls._instances[absolute_path] = instance
+
+        return cls._instances[absolute_path]
+
+    def _load_config(self, absolute_filepath: str) -> None:
+        with open(absolute_filepath, encoding='utf-8') as f:
             self._config = json.load(f)
 
     def get_base_url(self) -> str:
         return self._config['base_url']
-
-    def get_search_cases(self) -> list[dict]:
-        return self._config['search_cases']
