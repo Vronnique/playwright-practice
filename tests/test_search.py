@@ -9,15 +9,11 @@ config = ConfigReader()
 URL = config.get_base_url()
 
 
-@pytest.mark.parametrize(
-    "name, n, filter_type",
-    [
-        ('city', 10, SearchFilter.PRICE_ASC),
-        ('city', 15, SearchFilter.PRICE_DESC),
-        ('habits', 10, SearchFilter.PRICE_ASC),
-        ('habits', 15, SearchFilter.PRICE_DESC),
-    ],
-)
+@pytest.mark.parametrize('name', ['city', 'habits'])
+@pytest.mark.parametrize('n, filter_type', [
+    (10, SearchFilter.PRICE_ASC),
+    (15, SearchFilter.PRICE_DESC)
+])
 def test_search_with_filter(page: Page, name, n, filter_type) -> None:
     page.goto(URL)
 
@@ -35,14 +31,12 @@ def test_search_with_filter(page: Page, name, n, filter_type) -> None:
     # Проверка 2: порядок цен соответствует фильтру
     if filter_type == SearchFilter.PRICE_ASC:
         expected = sorted(actual_prices)
-        direction = 'Price: low to high'
     elif filter_type == SearchFilter.PRICE_DESC:
         expected = sorted(actual_prices, reverse=True)
-        direction = 'Price: high to low'
     else:
         pytest.fail(f'Неизвестный фильтр: {filter_type}')
 
     assert actual_prices == expected, (
-        f'Цены не отсортированы в соответствии с фильтром: {direction}. '
+        f'Цены не отсортированы в соответствии с фильтром. '
         f'Ожидали: {expected}, фактически: {actual_prices}'
     )
