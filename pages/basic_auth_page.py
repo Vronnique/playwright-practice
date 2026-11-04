@@ -1,9 +1,6 @@
 from playwright.sync_api import Page
 
-from ui.page_actions import PageActions
 from ui.web_element import WebElement
-
-from utils.url_utils import embed_credentials_in_url
 
 
 class BasicAuthPage:
