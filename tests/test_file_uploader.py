@@ -1,10 +1,10 @@
 from pathlib import Path
+
 from playwright.sync_api import Page
 
 from pages.file_uploader_page import FileUploaderPage
 from ui.page_actions import PageActions
 
-BASE_URL = 'https://the-internet.herokuapp.com/upload'
 FILE_PATH = Path(__file__).parent.parent / 'file_for_test.txt'
 EXPECTED_TEXT = 'File Uploaded!'
 EXPECTED_FILE_NAME = FILE_PATH.name
@@ -14,7 +14,7 @@ def test_uploader(page: Page):
     uploader_page = FileUploaderPage(page)
     actions = PageActions(page)
 
-    actions.goto(BASE_URL)
+    actions.goto('/upload')
 
     uploader_page.set_input_file(FILE_PATH)
     uploader_page.click_upload_button()

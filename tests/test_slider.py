@@ -1,17 +1,16 @@
 import random
+
 from playwright.sync_api import Page
 
 from pages.slider_page import SliderPage
 from ui.page_actions import PageActions
-
-BASE_URL = 'https://the-internet.herokuapp.com/horizontal_slider'
 
 
 def test_slider(page: Page):
     slider_page = SliderPage(page)
     actions = PageActions(page)
 
-    actions.goto(BASE_URL)
+    actions.goto('/horizontal_slider')
 
     # задаём рандомное значение слайдера
     steps = random.randint(1, 9)

@@ -3,7 +3,6 @@ from playwright.sync_api import Page
 from pages.hovers_page import HoversPage
 from ui.page_actions import PageActions
 
-BASE_URL = 'https://the-internet.herokuapp.com/hovers'
 NAME_TEMPLATE = 'name: user{N}'  # где N — порядковый номер карточки пользователя
 
 
@@ -11,7 +10,7 @@ def test_hover_all_users(page: Page):
     hovers_page = HoversPage(page)
     actions = PageActions(page)
 
-    actions.goto(BASE_URL)
+    actions.goto('/hovers')
 
     for i, _ in enumerate(hovers_page.users):
         hovers_page.hover_user(i)

@@ -3,7 +3,6 @@ from playwright.sync_api import Page
 from pages.downloader_page import DownloaderPage
 from ui.page_actions import PageActions
 
-BASE_URL = 'https://the-internet.herokuapp.com/download'
 INDEX = 2
 
 
@@ -11,7 +10,7 @@ def test_downloader(page: Page):
     downloader_page = DownloaderPage(page)
     actions = PageActions(page)
 
-    actions.goto(BASE_URL)
+    actions.goto('/download')
 
     expected_file_name = downloader_page.get_file_name(INDEX)
 

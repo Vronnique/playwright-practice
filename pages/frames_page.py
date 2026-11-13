@@ -1,4 +1,4 @@
-from playwright.sync_api import Page, Frame
+from playwright.sync_api import Frame, Page
 
 from ui.web_element import WebElement
 

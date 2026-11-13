@@ -3,13 +3,11 @@ from playwright.sync_api import Page
 from pages.frames_page import FramesPage
 from ui.page_actions import PageActions
 
-BASE_URL = 'https://the-internet.herokuapp.com/nested_frames'
-
 
 def test_frames(page: Page):
     actions = PageActions(page)
 
-    actions.goto(BASE_URL)
+    actions.goto('/nested_frames')
 
     frames_page = FramesPage(page)
 

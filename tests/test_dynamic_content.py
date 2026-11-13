@@ -1,10 +1,10 @@
 from collections import Counter
+
 from playwright.sync_api import Page
 
 from pages.dinamyc_content_page import DinamycContentPage
 from ui.page_actions import PageActions
 
-BASE_URL = 'https://the-internet.herokuapp.com/dynamic_content'
 MAX_ATTEMPTS = 20
 
 
@@ -12,7 +12,7 @@ def test_dynamic_content(page: Page):
     dc_page = DinamycContentPage(page)
     actions = PageActions(page)
 
-    actions.goto(BASE_URL)
+    actions.goto('/dynamic_content')
 
     found = False
     for _ in range(MAX_ATTEMPTS):

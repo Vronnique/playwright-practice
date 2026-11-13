@@ -4,7 +4,6 @@ from pages.main_windows_page import MainWindowsPage
 from pages.new_window_page import NewWindowPage
 from ui.page_actions import PageActions
 
-BASE_URL = 'https://the-internet.herokuapp.com/windows'
 EXPECTED_TEXT = 'New Window'
 
 
@@ -12,7 +11,7 @@ def test_windows(page: Page):
     main_page = MainWindowsPage(page)
     actions = PageActions(page)
 
-    actions.goto(BASE_URL)
+    actions.goto('/windows')
 
     with actions.expect_new_page() as new_page_info1:
         main_page.click_new_window_link()

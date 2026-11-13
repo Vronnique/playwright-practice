@@ -1,4 +1,5 @@
 from pathlib import Path
+
 from playwright.sync_api import Page
 
 from ui.web_element import WebElement
