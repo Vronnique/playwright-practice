@@ -1,5 +1,4 @@
 {
     "base_url": "https://the-internet.herokuapp.com",
-    "ignore_https_errors": true,
-    "block_analytics": true
+    "ignore_https_errors": true
 }

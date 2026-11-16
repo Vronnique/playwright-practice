@@ -19,6 +19,15 @@ class SliderPage:
             description='Значение слайдера'
         )
 
+    def get_min_value(self) -> float:
+        return float(self.slider.get_attribute("min"))
+
+    def get_max_value(self) -> float:
+        return float(self.slider.get_attribute("max"))
+
+    def get_step(self) -> float:
+        return float(self.slider.get_attribute("step"))
+
     def set_value_by_keyboard(self, steps: int) -> None:
         self.slider.focus()
         for _ in range(steps):

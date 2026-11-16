@@ -1,5 +1,3 @@
-from collections import Counter
-
 from playwright.sync_api import Page
 
 from pages.dinamyc_content_page import DinamycContentPage
@@ -17,8 +15,7 @@ def test_dynamic_content(page: Page):
     found = False
     for _ in range(MAX_ATTEMPTS):
         srcs = dc_page.get_images_src()
-        counts = Counter(srcs)
-        if max(counts.values()) >= 2:
+        if len(srcs) != len(set(srcs)):
             found = True
             break
         page.reload()
